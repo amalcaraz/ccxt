@@ -1416,6 +1416,7 @@ module.exports = class bittrex extends Exchange {
             if (subaccountId !== undefined) {
                 auth += subaccountId;
             }
+            const applicationId = this.safeValue (this.options, 'applicationId');
             const signature = this.hmac (this.encode (auth), this.encode (this.secret), 'sha512');
             headers = {
                 'Api-Key': this.apiKey,
@@ -1425,6 +1426,9 @@ module.exports = class bittrex extends Exchange {
             };
             if (subaccountId !== undefined) {
                 headers['Api-Subaccount-Id'] = subaccountId;
+            }
+            if (applicationId !== undefined) {
+                headers['Application-Id'] = applicationId;
             }
             if (method === 'POST') {
                 headers['Content-Type'] = 'application/json';
